@@ -1,6 +1,7 @@
 version: '3.4'
 
 services:
+  # DATABASE
   catalogdb:
     container_name: catalogdb
     environment:
@@ -12,7 +13,8 @@ services:
         - "5432:5432"
     volumes:
       - postgres_catalog:/var/lib/postgresql/data/ 
-      
+   
+  # APPLICATION    
   catalog.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

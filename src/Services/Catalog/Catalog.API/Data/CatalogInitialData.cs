@@ -11,7 +11,7 @@ namespace Catalog.API.Data
             if (await session.Query<Product>().AnyAsync())
                 return;
 
-            // Marten UPSERT will cater for existing records
+            // Marten UPSERT will carter for existing records
             session.Store<Product>(GetPreconfiguredProducts());
             await session.SaveChangesAsync();
         }
