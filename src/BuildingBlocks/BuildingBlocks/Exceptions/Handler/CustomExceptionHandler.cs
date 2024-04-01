@@ -1,17 +1,12 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace BuildingBlocks.Exceptions.Handler;
-/*
-public class CustomExceptionHandler
-(ILogger<CustomExceptionHandler> logger)
+
+public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger)
     : IExceptionHandler
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext context, Exception exception, CancellationToken cancellationToken)
@@ -73,4 +68,3 @@ public class CustomExceptionHandler
         return true;
     }
 }
-*/
