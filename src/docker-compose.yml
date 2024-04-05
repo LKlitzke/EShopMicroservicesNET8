@@ -1,15 +1,32 @@
 version: '3.4'
 
 services:
+  # Catalog Application
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
 
+  # Catalog Database
   catalogdb:
     image: postgres
 
+  # Basket Application
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.API/Dockerfile
+  
+  # Basket Database
+  basketdb:
+    image: postgres
+
+  # RedisDB
+  distributedcache:
+    image: redis
+
 volumes:
   postgres_catalog:    
-  
+  postgres_basket:
