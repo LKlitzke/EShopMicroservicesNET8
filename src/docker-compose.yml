@@ -23,6 +23,13 @@ services:
   basketdb:
     image: postgres
 
+  # Discount gRPC
+  discount.grpc:
+    image: ${DOCKER_REGISTRY-}discountgrpc
+    build:
+      context: .
+      dockerfile: Services/Discount/Discount.Grpc/Dockerfile
+
   # RedisDB
   distributedcache:
     image: redis
