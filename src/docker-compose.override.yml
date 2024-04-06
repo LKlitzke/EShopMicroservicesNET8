@@ -45,7 +45,7 @@ services:
     depends_on:
       - basketdb
       - distributedcache
-      #- discount.grpc
+      - discount.grpc
       #- messagebroker
     ports:
       - "6001:8080"

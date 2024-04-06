@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Rewrite;
+﻿using Discount.Grpc;
+using Microsoft.AspNetCore.Rewrite;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Basket.API.Basket.StoreBasket;
 
@@ -13,14 +15,27 @@ public class StoreBasketCommandValidator : AbstractValidator<StoreBasketCommand>
         RuleFor(x => x.Cart.UserName).NotEmpty().WithMessage("UserName is required");
     }
 }
-public class StoreBasketCommandHandler(IBasketRepository basketRepository) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
+public class StoreBasketCommandHandler
+    (IBasketRepository basketRepository, DiscountProtoService.DiscountProtoServiceClient discountProto)
+    : ICommandHandler<StoreBasketCommand, StoreBasketResult>
 {
     private readonly IBasketRepository _basketRepository = basketRepository;
     public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
     {
+        await DeductDiscount(command.Cart, cancellationToken);
+
         //ShoppingCart cart = command.Cart;
         var result = await _basketRepository.StoreBasket(command.Cart, cancellationToken);
 
         return new StoreBasketResult(result.UserName);
+    }
+
+    public async Task DeductDiscount(ShoppingCart cart, CancellationToken cancellationToken)
+    {
+        foreach (var item in cart.Items)
+        {
+            var coupon = await discountProto.GetDiscountAsync(new GetDiscountRequest { ProductName = item.ProductName }, cancellationToken: cancellationToken);
+            item.Price -= coupon.Amount;
+        }
     }
 }
