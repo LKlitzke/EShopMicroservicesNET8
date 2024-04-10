@@ -24,13 +24,13 @@ public class AuditableEntityInterceptor : SaveChangesInterceptor
         {
             if (entry.State == EntityState.Added)
             {
-                entry.Entity.CreatedBy = "mehmet";
+                entry.Entity.CreatedBy = "lucasK";
                 entry.Entity.CreatedAt = DateTime.UtcNow;
             }
 
             if (entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
             {
-                entry.Entity.LastModifiedBy = "mehmet";
+                entry.Entity.LastModifiedBy = "lucasK";
                 entry.Entity.LastModified = DateTime.UtcNow;
             }
         }
@@ -39,6 +39,7 @@ public class AuditableEntityInterceptor : SaveChangesInterceptor
 
 public static class Extensions
 {
+    // Houve modificacao na entidade
     public static bool HasChangedOwnedEntities(this EntityEntry entry) =>
         entry.References.Any(r =>
             r.TargetEntry != null &&
