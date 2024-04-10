@@ -40,6 +40,7 @@ services:
     build:
       context: .
       dockerfile: Services/Ordering/Ordering.API/Dockerfile
+
   # Order Database
   orderdb:
     image: mcr.microsoft.com/mssql/server
