@@ -1,6 +1,6 @@
 ﻿namespace Ordering.Domain.ValueObjects;
 
-public class CustomerId
+public record CustomerId
 {
     public Guid Value { get; }
     private CustomerId(Guid value) => Value = value;
