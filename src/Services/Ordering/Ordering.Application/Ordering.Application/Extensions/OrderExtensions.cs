@@ -23,7 +23,8 @@ public static class OrderExtensions
 
     private static OrderDTO DTOFromOrder(Order order)
     {
-        return new OrderDTO(
+        return new OrderDTO
+        (
             Id: order.Id.Value,
             CustomerId: order.CustomerId.Value,
             OrderName: order.OrderName.Value,
