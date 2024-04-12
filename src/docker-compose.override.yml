@@ -46,7 +46,7 @@ services:
       - basketdb
       - distributedcache
       - discount.grpc
-      #- messagebroker
+      - messagebroker
     ports:
       - "6001:8080"
       - "6061:8081"
@@ -95,13 +95,13 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
       - ConnectionStrings__Database=Server=orderdb;Database=OrderDb;User Id=sa;Password=LucasKlitzkeDB1703*;Encrypt=False;TrustServerCertificate=True
-      #- MessageBroker__Host=amqp://ecommerce-mq:5672
-      #- MessageBroker__UserName=guest
-      #- MessageBroker__Password=guest
-      #- FeatureManagement__OrderFullfilment=false
+      - MessageBroker__Host=amqp://ecommerce-mq:5672
+      - MessageBroker__UserName=guest
+      - MessageBroker__Password=guest
+      - FeatureManagement__OrderFullfilment=false
     depends_on:
       - orderdb
-      #- messagebroker
+      - messagebroker
     ports:
       - "6003:8080"
       - "6063:8081"
@@ -118,3 +118,15 @@ services:
     restart: always
     ports:
       - "1433:1433"
+
+  # RabbitMQ
+  messagebroker:
+    container_name: messagebroker
+    hostname: ecommerce-mq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"

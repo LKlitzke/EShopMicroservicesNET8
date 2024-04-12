@@ -45,6 +45,10 @@ services:
   orderdb:
     image: mcr.microsoft.com/mssql/server
 
+  # RabbitMQ
+  messagebroker:
+    image: rabbitmq:management
+
 volumes:
   postgres_catalog:    
   postgres_basket:
